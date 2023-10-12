@@ -6,8 +6,12 @@ require('dotenv').config();
 exports.auth = async (req, res, next)=>{
     
     try{
-        //extracting token from body
-        const token = req.body.token;
+        //extracting token from different sources
+    const token = req.body.token || req.cookies.token || req.header("Authorization").replace("Bearer ","");
+
+    // console.log("req.body.token is ", req.body.token)
+    // console.log("req.cookies.token is ", req.cookies.token)
+    // console.log(`req.header("Authorization").replace("Bearer ","") is `, req.header("Authorization").replace("Bearer ",""))
 
         if(!token){
             res.status(401).json({
@@ -88,3 +92,4 @@ exports.isAdmin = (req, res, next)=>{
     }
 
 }
+
